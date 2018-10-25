@@ -34,12 +34,14 @@ import org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import javax.annotation.Nonnull;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Set;
 import java.util.logging.Logger;
 
-public class JobTearDownStep extends Step {
+public class JobTearDownStep extends Step implements Serializable {
 
+    private static final long serialVersionUID = 850388417982956491L;
     private String jobName;
 
     @DataBoundConstructor
