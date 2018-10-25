@@ -22,7 +22,7 @@
 //  THE SOFTWARE.
 //
 
-package com.fuzz.multibranchteardown;
+package com.fuzzpro.multibranchteardown;
 
 import hudson.Extension;
 import hudson.model.AbstractProject;

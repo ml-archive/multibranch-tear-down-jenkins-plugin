@@ -1,5 +1,5 @@
 //
-//  JobTearDownAction.java
+//  JobTearDownConfiguration.java
 //
 //  Copyright (c) 2018 Fuzz Productions, LLC (http://fuzzproductions.com/)
 //
@@ -22,47 +22,37 @@
 //  THE SOFTWARE.
 //
 
-package com.fuzz.multibranchteardown;
+package com.fuzzpro.multibranchteardown;
 
-import hudson.model.Action;
-import org.kohsuke.stapler.export.Exported;
-import org.kohsuke.stapler.export.ExportedBean;
-
-import javax.annotation.CheckForNull;
+import hudson.Extension;
+import jenkins.model.GlobalConfiguration;
+import net.sf.json.JSONObject;
+import org.kohsuke.stapler.DataBoundSetter;
+import org.kohsuke.stapler.StaplerRequest;
 import java.io.Serializable;
 
-@ExportedBean()
-public class JobTearDownAction implements Serializable, Action {
+@Extension
+public class JobTearDownConfiguration extends GlobalConfiguration implements Serializable {
 
-    @Exported(visibility = 3)
-    public String jobName;
+    private String tearDownJob = null;
 
-    public JobTearDownAction(String jobName) {
-        this.jobName = jobName;
+    public JobTearDownConfiguration() {
+        load();
     }
 
-    @CheckForNull
-    @Override
-    public String getIconFileName() {
-        return null;
+    public String getTearDownJob() {
+        return tearDownJob;
     }
 
-    @CheckForNull
-    @Override
-    public String getDisplayName() {
-        return null;
-    }
-
-    @CheckForNull
-    @Override
-    public String getUrlName() {
-        return null;
+    @DataBoundSetter
+    public void setTearDownJob(String tearDownJob) {
+        this.tearDownJob = tearDownJob;
+        save();
     }
 
     @Override
-    public String toString() {
-        return "JobTearDownAction{" +
-                "jobName=" + jobName +
-                '}';
+    public boolean configure(StaplerRequest req, JSONObject json) throws FormException {
+        setTearDownJob(json.getString("tearDownJob"));
+        return super.configure(req, json);
     }
 }
