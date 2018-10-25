@@ -82,7 +82,7 @@ public class JobTearDownListener extends ItemListener {
         if (action != null) {
             Logger.getLogger(LOGGER).fine("Execute tear down on: " + action.jobName);
             tearDownJob = Jenkins.get().getItemByFullName(action.jobName);
-        }else if (jobName != null && jobName.trim().equals("")) {
+        }else if (jobName != null && !jobName.trim().isEmpty()) {
             Logger.getLogger(LOGGER).fine("Default Job: " + config.getTearDownJob());
             tearDownJob = Jenkins.get().getItemByFullName(jobName);
         } else {
