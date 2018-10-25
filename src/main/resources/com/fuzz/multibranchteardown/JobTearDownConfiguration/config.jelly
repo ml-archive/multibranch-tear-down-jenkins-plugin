@@ -1,0 +1,12 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+         xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:bh="/lib/health">
+    <f:section title="MultiBranch Job Tear Down Plugin">
+        <f:entry title="Job Name to Trigger"
+                 description="
+             This is a name of job that should be triggered when a branch job is deleted, only works on multibranch jobs
+           ">
+            <f:textbox name="jobteardown.tearDownJob" value="${instance.tearDownJob}"/>
+        </f:entry>
+    </f:section>
+</j:jelly>
