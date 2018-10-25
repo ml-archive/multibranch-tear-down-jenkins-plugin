@@ -24,39 +24,19 @@
 
 package com.fuzzpro.multibranchteardown;
 
-import hudson.model.Action;
+import hudson.model.InvisibleAction;
 import org.kohsuke.stapler.export.Exported;
 import org.kohsuke.stapler.export.ExportedBean;
-
-import javax.annotation.CheckForNull;
 import java.io.Serializable;
 
 @ExportedBean()
-public class JobTearDownAction implements Serializable, Action {
+public class JobTearDownAction extends InvisibleAction implements Serializable {
 
     @Exported(visibility = 3)
     public String jobName;
 
     public JobTearDownAction(String jobName) {
         this.jobName = jobName;
-    }
-
-    @CheckForNull
-    @Override
-    public String getIconFileName() {
-        return null;
-    }
-
-    @CheckForNull
-    @Override
-    public String getDisplayName() {
-        return null;
-    }
-
-    @CheckForNull
-    @Override
-    public String getUrlName() {
-        return null;
     }
 
     @Override
