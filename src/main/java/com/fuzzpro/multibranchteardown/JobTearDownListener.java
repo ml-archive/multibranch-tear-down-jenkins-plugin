@@ -51,8 +51,9 @@ import java.util.logging.Logger;
 @Extension
 public class JobTearDownListener extends ItemListener {
 
-    protected static final String LOGGER = JobTearDownListener.class.getSimpleName();
+    static final String LOGGER = JobTearDownListener.class.getSimpleName();
 
+    @Override
     public void onUpdated(Item item) {
         Logger.getLogger(LOGGER).fine("Job Class: " + item.getClass().getSimpleName());
         if (canTearDownInfrastructure(item)) {
