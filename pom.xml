@@ -8,7 +8,7 @@
         <relativePath />
     </parent>
     <groupId>com.fuzzpro.jenkins-plugins</groupId>
-    <artifactId>multibranch-tear-down</artifactId>
+    <artifactId>multibranch-job-tear-down</artifactId>
     <version>1.0</version>
     <packaging>hpi</packaging>
     <properties>
