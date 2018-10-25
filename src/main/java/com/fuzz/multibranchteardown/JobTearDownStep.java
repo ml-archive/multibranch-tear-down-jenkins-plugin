@@ -84,7 +84,7 @@ public class JobTearDownStep extends Step implements Serializable {
 
     public static class Execution extends SynchronousNonBlockingStepExecution<Void> {
 
-        private transient JobTearDownStep step;
+        private JobTearDownStep step;
 
         private Execution(JobTearDownStep step, @Nonnull StepContext context) {
             super(context);

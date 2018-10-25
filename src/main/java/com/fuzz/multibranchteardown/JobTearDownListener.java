@@ -78,7 +78,10 @@ public class JobTearDownListener extends ItemListener {
         Run run = job.getLastCompletedBuild();
         JobTearDownAction action = run.getAction(JobTearDownAction.class);
         JobTearDownConfiguration config = GlobalConfiguration.all().get(JobTearDownConfiguration.class);
-        String jobName = config.getTearDownJob();
+        String jobName = null;
+        if (config != null) {
+            jobName = config.getTearDownJob();
+        }
         if (action != null) {
             Logger.getLogger(LOGGER).fine("Execute tear down on: " + action.jobName);
             tearDownJob = Jenkins.get().getItemByFullName(action.jobName);
