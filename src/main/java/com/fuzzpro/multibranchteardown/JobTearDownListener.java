@@ -30,8 +30,8 @@ import hudson.model.Cause;
 import hudson.model.Item;
 import hudson.model.ItemGroup;
 import hudson.model.Job;
+import hudson.model.JobProperty;
 import hudson.model.ParametersAction;
-import hudson.model.Run;
 import hudson.model.StringParameterValue;
 import hudson.model.listeners.ItemListener;
 import hudson.plugins.git.GitSCM;
@@ -43,7 +43,6 @@ import jenkins.branch.MultiBranchProject;
 import jenkins.model.GlobalConfiguration;
 import jenkins.model.Jenkins;
 import jenkins.scm.api.SCMHead;
-import jenkins.scm.api.mixin.ChangeRequestSCMHead;
 import jenkins.scm.api.mixin.ChangeRequestSCMHead2;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import java.util.logging.Logger;
@@ -76,16 +75,16 @@ public class JobTearDownListener extends ItemListener {
 
     private AbstractProject getTearDownJob(Job job) {
         Item tearDownJob;
-        Run run = job.getLastCompletedBuild();
-        JobTearDownAction action = run.getAction(JobTearDownAction.class);
+        JobProperty prop = job.getProperty(JobTearDownProperty.class);
         JobTearDownConfiguration config = GlobalConfiguration.all().get(JobTearDownConfiguration.class);
         String jobName = null;
         if (config != null) {
             jobName = config.getTearDownJob();
         }
-        if (action != null) {
-            Logger.getLogger(LOGGER).fine("Execute tear down on: " + action.jobName);
-            tearDownJob = Jenkins.get().getItemByFullName(action.jobName);
+        if (prop != null && prop instanceof JobTearDownProperty) {
+            JobTearDownProperty jtdprop = (JobTearDownProperty) prop;
+            Logger.getLogger(LOGGER).fine("Execute tear down on: " + jtdprop.getJobName());
+            tearDownJob = Jenkins.get().getItemByFullName(jtdprop.getJobName());
         }else if (jobName != null && !jobName.trim().isEmpty()) {
             Logger.getLogger(LOGGER).fine("Default Job: " + config.getTearDownJob());
             tearDownJob = Jenkins.get().getItemByFullName(jobName);

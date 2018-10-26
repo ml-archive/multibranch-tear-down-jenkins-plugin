@@ -1,5 +1,5 @@
 //
-//  JobTearDownAction.java
+//  JobTearDownProperty.java
 //
 //  Copyright (c) 2018 Fuzz Productions, LLC (http://fuzzproductions.com/)
 //
@@ -24,25 +24,41 @@
 
 package com.fuzzpro.multibranchteardown;
 
-import hudson.model.InvisibleAction;
+import hudson.Extension;
+import hudson.model.Descriptor;
+import hudson.model.DescriptorVisibilityFilter;
+import hudson.model.Job;
+import jenkins.branch.MultiBranchProject;
+import jenkins.model.OptionalJobProperty;
+import org.jenkinsci.Symbol;
+import org.jenkinsci.plugins.workflow.job.WorkflowJob;
+import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.export.Exported;
-import org.kohsuke.stapler.export.ExportedBean;
 import java.io.Serializable;
 
-@ExportedBean()
-public class JobTearDownAction extends InvisibleAction implements Serializable {
+public class JobTearDownProperty extends OptionalJobProperty<WorkflowJob> implements Serializable {
 
-    @Exported(visibility = 3)
-    public String jobName;
+    private static final long serialVersionUID = 850388417982956491L;
+    private final String jobName;
 
-    public JobTearDownAction(String jobName) {
+    @DataBoundConstructor
+    public JobTearDownProperty(String jobName) {
         this.jobName = jobName;
     }
 
-    @Override
-    public String toString() {
-        return "JobTearDownAction{" +
-                "jobName=" + jobName +
-                '}';
+    @Exported
+    public String getJobName() {
+        return jobName;
     }
+
+    @Extension
+    @Symbol("branchTearDownExecutor")
+    public static class DescriptorImpl extends OptionalJobPropertyDescriptor {
+
+        @Override
+        public String getDisplayName() {
+            return "Trigger a tear down job on deletion?";
+        }
+    }
+
 }
